@@ -10,7 +10,7 @@
   set DEBUG_LENGTH 0x0000000000001000
   set IMEM_BASE	0x0000000000001000
   set IMEM_LENGTH	$lmem
-  set DMEM_BASE	$IMEM_LENGTH
+  set DMEM_BASE	[expr $IMEM_BASE + $IMEM_LENGTH]
   set DMEM_LENGTH	$lmem
 
   # Create instance: cva6_0, and set properties
