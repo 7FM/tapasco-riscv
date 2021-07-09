@@ -33,6 +33,6 @@ _start:
 	li x30, 0
 	li x31, 0
 init_stack:
-	lui sp, 0x00008
+	lui sp, 0x00009
 	addi sp, sp, 0x000
 	jal main
