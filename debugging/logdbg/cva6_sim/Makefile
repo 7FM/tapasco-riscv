@@ -5,14 +5,14 @@ endif
 SRC ?= cva6/src
 SRC_PREFIX ?= cva6/
 SRC_FILES ?= ../../../riscv/cva6/core.files
-ADD_SCRS ?= $(SRC_PREFIX)include/axi_intf.sv $(SRC_PREFIX)tb/ariane_soc_pkg.sv $(SRC_PREFIX)tb/ariane_axi_soc_pkg.sv $(SRC_PREFIX)tb/ariane_custom_tb_top.sv
+ADD_SCRS ?= $(SRC_PREFIX)include/axi_intf.sv $(SRC_PREFIX)tb/ariane_soc_pkg.sv $(SRC_PREFIX)tb/ariane_axi_soc_pkg.sv $(SRC_PREFIX)tb/ariane_custom_tb_top2.sv
 INCLUDE_DIR ?= $(SRC_PREFIX)include -I$(SRC_PREFIX)src/common_cells/include -I$(SRC_PREFIX)src/common_cells/include/common_cells
 SIM_SRC ?= sim_src
 V_DIR ?= sim_build
 
 SIM_DEFS ?= -DRUN_SIM
 
-DEFAULT_TOP_MODULE := ariane_custom_tb_top
+DEFAULT_TOP_MODULE := ariane_custom_tb_top2
 
 VERILATOR_PREFIX ?=
 VERILATOR := $(VERILATOR_PREFIX)verilator
