@@ -6,10 +6,10 @@
 #include <verilated.h> // Defines common routines
 #include <verilated_vcd_c.h>
 
-#define TOP_MODULE Variane_custom_tb_top
+#define TOP_MODULE Variane_custom_tb_top2
 
-#include "Variane_custom_tb_top.h"       // basic Top header
-#include "Variane_custom_tb_top__Syms.h" // all headers to access exposed internal signals
+#include "Variane_custom_tb_top2.h"       // basic Top header
+#include "Variane_custom_tb_top2__Syms.h" // all headers to access exposed internal signals
 
 #include "DMI_Handler.hpp"
 #include "dm_testbench_interface.hpp"
@@ -76,12 +76,15 @@ static void run(uint64_t limit, bool dump, bool checkStopCondition = true) {
 }
 
 /******************************************************************************/
-static void reset(const std::shared_ptr<dm::DM_TestBenchInterface>& dm_interface) {
+static void reset(const std::shared_ptr<dm::DM_TestBenchInterface> &dm_interface) {
     // Initialize signals & perform reset
     ptop->dmi_req = 0;
     ptop->dmi_wr = 0;
     ptop->dmi_addr = 0;
     ptop->dmi_wdata = 0;
+
+    // Set the boot addr
+    ptop->boot_addr_i = 0x01000;
 
     ptop->rst_n = 0;
     run(100, true, false);
@@ -138,7 +141,7 @@ int main(int argc, char **argv) {
                 // init trace dump
                 Verilated::traceEverOn(true);
                 tfp = new VerilatedVcdC;
-                ptop->trace(tfp, 99);
+                ptop->trace(tfp, 200);
                 tfp->open(optarg);
                 break;
             case 's':
