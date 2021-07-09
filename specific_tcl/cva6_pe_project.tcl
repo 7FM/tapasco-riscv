@@ -22,8 +22,8 @@
 
   # Create instance: cva6_0, and set properties
   set cva6_0 [ create_bd_cell -type ip -vlnv [dict get $cpu_vlnv $project_name] cva6_0 ]
-  set cva6_timer_0 [ create_bd_cell -type ip -vlnv openhwgroup:cva6:cva6_timer:0.1 cva6_timer_0 ]
-  set cva6_dm_0 [ create_bd_cell -type ip -vlnv openhwgroup:cva6:cva6_dm:0.1 cva6_dm_0 ]
+  #set cva6_timer_0 [ create_bd_cell -type ip -vlnv openhwgroup:cva6:cva6_timer:0.1 cva6_timer_0 ]
+  #set cva6_dm_0 [ create_bd_cell -type ip -vlnv openhwgroup:cva6:cva6_dm:0.1 cva6_dm_0 ]
   set cpu_clk [get_bd_pins cva6_0/clk_i]
 
   # TODO add to config & adjust ariane_top.sv
@@ -48,11 +48,11 @@
 
   # Axi masters
   connect_bd_intf_net [get_bd_intf_pins cva6_0/io_axi_mem] -boundary_type upper [get_bd_intf_pins cva6_mem_splitter/S00_AXI]
-  connect_bd_intf_net [get_bd_intf_pins cva6_dm_0/axi_dm_master] -boundary_type upper [get_bd_intf_pins cva6_mem_splitter/S01_AXI]
+  #connect_bd_intf_net [get_bd_intf_pins cva6_dm_0/axi_dm_master] -boundary_type upper [get_bd_intf_pins cva6_mem_splitter/S01_AXI]
 
   # Axi slaves
-  connect_bd_intf_net -boundary_type upper [get_bd_intf_pins cva6_mem_splitter/M00_AXI] [get_bd_intf_pins cva6_timer_0/axi_timer]
-  connect_bd_intf_net -boundary_type upper [get_bd_intf_pins cva6_mem_splitter/M03_AXI] [get_bd_intf_pins cva6_dm_0/axi_dm_slave]
+  #connect_bd_intf_net -boundary_type upper [get_bd_intf_pins cva6_mem_splitter/M00_AXI] [get_bd_intf_pins cva6_timer_0/axi_timer]
+  #connect_bd_intf_net -boundary_type upper [get_bd_intf_pins cva6_mem_splitter/M03_AXI] [get_bd_intf_pins cva6_dm_0/axi_dm_slave]
   connect_bd_intf_net -boundary_type upper [get_bd_intf_pins cva6_mem_splitter/M01_AXI] [get_bd_intf_pins axi_mem_intercon_1/S00_AXI]
   #connect_bd_intf_net -boundary_type upper [get_bd_intf_pins cva6_mem_splitter/M02_AXI] [get_bd_intf_pins rv_imem_ctrl/S_AXI]
   # Connect clocks
@@ -81,19 +81,19 @@
   connect_bd_net [get_bd_pins mhartid_constant/dout] [get_bd_pins cva6_0/hart_id_i]
 
   # Connect Timer
-  connect_bd_net [get_bd_pins RVController_0/rv_rstn] [get_bd_pins cva6_timer_0/rst_ni]
-  connect_bd_net [get_bd_ports CLK] [get_bd_pins cva6_timer_0/clk_i]
-  connect_bd_net [get_bd_pins cva6_timer_0/ipi_o] [get_bd_pins cva6_0/ipi_i]
-  connect_bd_net [get_bd_pins cva6_timer_0/timer_irq_o] [get_bd_pins cva6_0/time_irq_i]
-  set test_mode_constant [create_bd_cell -type ip -vlnv xilinx.com:ip:xlconstant:1.1 test_mode_constant]
-  set_property -dict [list CONFIG.CONST_WIDTH {1}] [get_bd_cells test_mode_constant]
-  set_property -dict [list CONFIG.CONST_VAL {0}] [get_bd_cells test_mode_constant]
-  connect_bd_net [get_bd_pins test_mode_constant/dout] [get_bd_pins cva6_timer_0/testmode_i]
+  #connect_bd_net [get_bd_pins RVController_0/rv_rstn] [get_bd_pins cva6_timer_0/rst_ni]
+  #connect_bd_net [get_bd_ports CLK] [get_bd_pins cva6_timer_0/clk_i]
+  #connect_bd_net [get_bd_pins cva6_timer_0/ipi_o] [get_bd_pins cva6_0/ipi_i]
+  #connect_bd_net [get_bd_pins cva6_timer_0/timer_irq_o] [get_bd_pins cva6_0/time_irq_i]
+  #set test_mode_constant [create_bd_cell -type ip -vlnv xilinx.com:ip:xlconstant:1.1 test_mode_constant]
+  #set_property -dict [list CONFIG.CONST_WIDTH {1}] [get_bd_cells test_mode_constant]
+  #set_property -dict [list CONFIG.CONST_VAL {0}] [get_bd_cells test_mode_constant]
+  #connect_bd_net [get_bd_pins test_mode_constant/dout] [get_bd_pins cva6_timer_0/testmode_i]
 
   # Connect Debug Module
-  connect_bd_net [get_bd_pins RVController_0/rv_rstn] [get_bd_pins cva6_dm_0/rst_ni]
-  connect_bd_net [get_bd_ports CLK] [get_bd_pins cva6_dm_0/clk_i]
-  connect_bd_net [get_bd_pins cva6_dm_0/debug_req_core_o] [get_bd_pins cva6_0/debug_req_i]
+  #connect_bd_net [get_bd_pins RVController_0/rv_rstn] [get_bd_pins cva6_dm_0/rst_ni]
+  #connect_bd_net [get_bd_ports CLK] [get_bd_pins cva6_dm_0/clk_i]
+  #connect_bd_net [get_bd_pins cva6_dm_0/debug_req_core_o] [get_bd_pins cva6_0/debug_req_i]
 
 #TODO handle unconnected pins:
 # /cva6_0/irq_i[1:0]
@@ -144,11 +144,11 @@ proc create_specific_addr_segs {} {
 
   # Additional address sections for DM and timer
   # Timer
-  create_bd_addr_seg -range $CLINT_LENGTH -offset $CLINT_BASE [get_bd_addr_spaces cva6_0/io_axi_mem] [get_bd_addr_segs cva6_timer_0/axi_timer/reg0] SEG_cva6_clint
-  create_bd_addr_seg -range $CLINT_LENGTH -offset $CLINT_BASE [get_bd_addr_spaces cva6_dm_0/axi_dm_master] [get_bd_addr_segs cva6_timer_0/axi_timer/reg0] SEG_cva6_clint
+  #create_bd_addr_seg -range $CLINT_LENGTH -offset $CLINT_BASE [get_bd_addr_spaces cva6_0/io_axi_mem] [get_bd_addr_segs cva6_timer_0/axi_timer/reg0] SEG_cva6_clint
+  #create_bd_addr_seg -range $CLINT_LENGTH -offset $CLINT_BASE [get_bd_addr_spaces cva6_dm_0/axi_dm_master] [get_bd_addr_segs cva6_timer_0/axi_timer/reg0] SEG_cva6_clint
   # DM
-  create_bd_addr_seg -range $DEBUG_LENGTH -offset $DEBUG_BASE [get_bd_addr_spaces cva6_0/io_axi_mem] [get_bd_addr_segs cva6_dm_0/axi_dm_slave/reg0] SEG_cva6_dm
-  create_bd_addr_seg -range $DEBUG_LENGTH -offset $DEBUG_BASE [get_bd_addr_spaces cva6_dm_0/axi_dm_master] [get_bd_addr_segs cva6_dm_0/axi_dm_slave/reg0] SEG_cva6_dm
+  #create_bd_addr_seg -range $DEBUG_LENGTH -offset $DEBUG_BASE [get_bd_addr_spaces cva6_0/io_axi_mem] [get_bd_addr_segs cva6_dm_0/axi_dm_slave/reg0] SEG_cva6_dm
+  #create_bd_addr_seg -range $DEBUG_LENGTH -offset $DEBUG_BASE [get_bd_addr_spaces cva6_dm_0/axi_dm_master] [get_bd_addr_segs cva6_dm_0/axi_dm_slave/reg0] SEG_cva6_dm
 }
 
 proc get_external_mem_addr_space {} {

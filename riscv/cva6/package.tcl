@@ -14,7 +14,7 @@ set_property include_dirs {"include" "src/common_cells/include" "src/common_cell
 # optionally remove unneeded files
 
 update_compile_order -fileset sources_1
-set_property top ariane_top [current_fileset]
+set_property top ariane_custom_top [current_fileset]
 update_compile_order -fileset sources_1
 
 #write_verilog top.v
