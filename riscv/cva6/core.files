@@ -12,6 +12,8 @@ include/axi_intf.sv
 src/fpu/src/fpu_div_sqrt_mvp/hdl/defs_div_sqrt_mvp.sv
 src/ariane_top.sv
 src/ariane_custom_top.sv
+src/raw_axi_master_connect.sv
+src/raw_axi_slave_connect.sv
 src/alu.sv
 src/amo_buffer.sv
 src/ariane_regfile_ff.sv
